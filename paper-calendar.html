@@ -1,15 +1,15 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-shadow/paper-shadow.html">
-<link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../core-icons/core-icons.html">
+<link rel="import" href="../core-icon/core-icon.html">
 <link rel="import" href="../core-field/core-field.html">
 <link rel="import" href="../core-toolbar/core-toolbar.html">
 <link rel="import" href="../core-selector/core-selector.html">
+<link rel="import" href="../paper-dropdown/paper-dropdown.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../core-overlay/core-overlay.html">
 
-<script src="../moment/moment.js"></script>
-<script src="../moment-range/lib/moment-range.js"></script>
+<link rel="import" href="calendar-button.html">
 
 <!--
 Element providing solution to no problem in particular.
@@ -27,25 +27,37 @@ Element providing solution to no problem in particular.
 <polymer-element name="paper-calendar">
   <template>
     <link rel="stylesheet" href="paper-calendar.css">
-    <core-field class="field">
-      <paper-input floatingLabel label="Set date" value="{{ date }}" flex></paper-input>
-      <core-icon icon="apps" on-click="{{ toggleInput }}"></core-icon>
-      <div id="calendar" vertical layout center-justified>
-        <paper-shadow z="2"></paper-shadow>
-        <core-toolbar class="calendar-head">
-          <paper-icon-button icon="arrow-back" on-click="{{ prev }}"></paper-icon-button>
-          <paper-button flex class="header" label="{{ header }}" on-click="{{ nextView }}"></paper-button>
-          <paper-icon-button icon="arrow-forward" on-click="{{ next }}"></paper-icon-button>
-        </core-toolbar>
-        <core-selector valueattr="data-value" selected="{{ item }}" target="{{$.content}}" itemsSelector=".active"></core-selector>
-        <div id="content" horizontal layout wrap justified>
-          <template id="days" repeat="{{ item in items }}">
-            <paper-button class="{{ type }} {{ item.cl }}" label="{{ item.label }}" data-value="{{ item.val }}" on-click="{{ setItem }}"></paper-button>
-          </template>
+    <div relative>
+      <core-field id="dateinput" class="field" >
+        <paper-input  value="{{ formattedDate }}" disabled ></paper-input>
+        <core-icon  icon="event" on-click="{{ toggleInput }}"></core-icon>
+      </core-field>
+     <paper-dropdown id="calendarDialog" relatedTarget="{{$.dateinput}}" halign="left" valign="top">
+
+        <div vertical layout center-justified>
+          <core-toolbar class="calendar-head">
+            <paper-icon-button icon="arrow-back" on-click="{{ prev }}"></paper-icon-button>
+            <paper-button flex class="header" on-click="{{ nextView }}">{{ header }}</paper-button>
+            <paper-icon-button icon="arrow-forward" on-click="{{ next }}"></paper-icon-button>
+          </core-toolbar>
+          <core-selector valueattr="data-value" selected="{{ item }}" target="{{$.content}}" itemsSelector=".active"></core-selector>
+          <div id="content" vertical layout>
+            <template id="rows" repeat="{{ row in items }}">
+              <div horizontal layout>
+                <template id="columns" repeat="{{column in row}}">
+                  <calendar-button class="{{ type }} {{ column.cl }}"  data-value="{{ column.val }}" on-click="{{ setItem }}">{{ column.label }}</calendar-button>
+                </template>
+              </div>
+            </template>
+          </div>
+          <paper-button simpleButton class="colored" on-click="{{ ready }}">Today</paper-button>
         </div>
-        <paper-button simpleButton class="colored" label="Today" on-click="{{ ready }}"></paper-button>
-      </div>
-    </core-field>
+
+      </paper-dropdown>
+    </div>
+
   </template>
+  <script src="../moment/moment.js"></script>
+  <script src="../moment-range/lib/moment-range.js"></script>
   <script src="paper-calendar.js"></script>
 </polymer-element>

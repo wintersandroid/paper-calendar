@@ -1,16 +1,18 @@
 :host {
-  display: block;
-  max-width: 200px;
+  /*display: block;*/
+
 }
 .field {
   position: relative;
+  
+
 }
 #date-input {
   padding: 6px;
 }
 #calendar {
-  width: 300px;
-  display: none;
+  /*width: 300px;*/
+  /*display: none;*/
   font-size: 18px;
   font-weight: 200;
   line-height: 30px;
@@ -18,13 +20,10 @@
   border-radius: 6px;
   padding: 10px;
   position: absolute;
-  margin-left: 10px;
-  top: -10px;
+  /*margin-left: 10px;*/
+  /*top: -10px;*/
   text-align: center;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
 #calendar.show {
   display: block;
@@ -39,6 +38,11 @@
 .header {
   text-align: center;
 }
+
+calendar-button{
+  width: 40px;
+}
+
 .days {
   width: 40px;
 }
@@ -60,7 +64,7 @@
 
 paper-button.colored {
   color: #4285f4;
-  fill: #4285f4;
+  /*background: #4285f4;*/
 }
 
 paper-button[simpleButton].colored {
